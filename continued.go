@@ -13,9 +13,28 @@ func NewContinued(nums ...int64) Continued {
 	return nums
 }
 
+// Step does one stop forward in generating the continued fraction
+func Step(e Extended) (int64, Extended) {
+	whole := e.Whole()
+	sub := e.SubtractInt(whole)
+	inv := sub.Inverse()
+	norm := inv.Normalize()
+	return whole, norm
+}
+
 // FromSquareRoot returns new istance of continued fraction from square root
 func FromSquareRoot(root int64) Continued {
-	return []int64{root}
+	var a []int64
+	e := Extended{0, 1, 1, 0, root}
+	a0, finalE := Step(e)
+	a = append(a, a0)
+	w, rest := Step(finalE)
+	for !rest.Equals(finalE) {
+		a = append(a, w)
+		w, rest = Step(rest)
+	}
+	a = append(a, w)
+	return a
 }
 
 // Equals tests for equality of two different continued fractions

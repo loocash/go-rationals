@@ -9,14 +9,6 @@ type T struct {
 	denominator int64
 }
 
-// gcd computes greatest common divisor
-func gcd(a, b int64) int64 {
-	for b != 0 {
-		a, b = b, a%b
-	}
-	return a
-}
-
 // Simplify simplifies the number
 func (n T) Simplify() T {
 	gcdVal := gcd(n.numerator, n.denominator)

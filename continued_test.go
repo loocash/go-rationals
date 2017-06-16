@@ -16,7 +16,23 @@ func TestString(t *testing.T) {
 	for _, test := range tests {
 		str := test.con.String()
 		if strings.Compare(str, test.str) != 0 {
-			t.Errorf("Continued Fraction of %s should be equal to %s\n", test.con, test.str)
+			t.Errorf("Continued Fraction of %s should be equal to %s instead of %s\n", test.con, test.str, str)
+		}
+	}
+}
+
+func TestStep(t *testing.T) {
+	var tests = []struct {
+		a Extended
+		b int64
+		c Extended
+	}{
+		{Extended{21, 7, 14, 0, 23}, 3, Extended{6, 2, 14, 0, 23}},
+	}
+
+	for _, test := range tests {
+		if a, rest := Step(test.a); a != test.b || !rest.Equals(test.c) {
+			t.Errorf("%s Step should be equal to %d %s instead of %d %s\n", test.a, test.b, test.c, a, rest)
 		}
 	}
 }
@@ -42,7 +58,7 @@ func TestContinued(t *testing.T) {
 	for _, test := range tests {
 		continued := FromSquareRoot(test.root)
 		if !continued.Equals(test.con) {
-			t.Errorf("Continued Fraction of sqrt(%d) should be equal to %s\n", test.root, test.con)
+			t.Errorf("Continued Fraction of sqrt(%d) should be equal to %s instead of %s\n", test.root, test.con, continued)
 		}
 	}
 }
