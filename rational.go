@@ -32,6 +32,12 @@ func (n T) Add(other T) T {
 	return NewRational(numerator, denominator)
 }
 
+// AddInt adds integer
+func (n T) AddInt(other int64) T {
+	r := NewRational(other, 1)
+	return n.Add(r)
+}
+
 // Neg returns negative value of a number
 func (n T) Neg() T {
 	return NewRational(-n.numerator, n.denominator)
