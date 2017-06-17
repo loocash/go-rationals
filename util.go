@@ -10,6 +10,7 @@ func gcd(a, b int64) int64 {
 	return a
 }
 
+// isSquare checks if a number is a square of another number
 func isSquare(n int64) bool {
 	sqrt := math.Sqrt(float64(n))
 	floor := int64(math.Floor(sqrt))
