@@ -2,8 +2,8 @@ package rational
 
 import "math"
 
-// gcd computes greatest common divisor
-func gcd(a, b int64) int64 {
+// GCD computes greatest common divisor
+func GCD(a, b int64) int64 {
 	for b != 0 {
 		a, b = b, a%b
 	}

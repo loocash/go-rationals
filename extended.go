@@ -45,7 +45,7 @@ func (e Extended) Simplify() Extended {
 		return -n
 	}
 	a, b, c := abs(e.a), abs(e.b), abs(e.c)
-	gcdVal := gcd(gcd(a, b), c)
+	gcdVal := GCD(GCD(a, b), c)
 	return Extended{e.a / gcdVal, e.b / gcdVal, e.c / gcdVal, e.d, e.p}
 }
 

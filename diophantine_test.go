@@ -1,6 +1,9 @@
 package rational
 
-import "testing"
+import (
+	"math/big"
+	"testing"
+)
 
 func TestDiophantineMinimal(t *testing.T) {
 	var tests = []struct{ D, x, y int }{
@@ -10,7 +13,7 @@ func TestDiophantineMinimal(t *testing.T) {
 	}
 
 	for _, test := range tests {
-		if x, y := DiophantineMinimal(int64(test.D)); int64(test.x) != x || int64(test.y) != y {
+		if x, y := DiophantineMinimal(int64(test.D)); big.NewInt(int64(test.x)).Cmp(&x) != 0 || big.NewInt(int64(test.y)).Cmp(&y) != 0 {
 			t.Errorf("DiophantineMinimal(%d) should be equal to (%d, %d) instead of (%d, %d)", test.D, test.x, test.y, x, y)
 		}
 	}
@@ -41,7 +44,7 @@ func TestFoldContinued(t *testing.T) {
 	}
 
 	for _, test := range tests {
-		if x, y := FoldContinued(test.con); x != test.x || y != test.y {
+		if x, y := FoldContinued(test.con); big.NewInt(int64(test.x)).Cmp(&x) != 0 || big.NewInt(int64(test.y)).Cmp(&y) != 0 {
 			t.Errorf("FoldContinued %s should return (%d, %d) instead of (%d, %d)\n", test.con, test.x, test.y, x, y)
 		}
 	}
