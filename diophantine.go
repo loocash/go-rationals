@@ -28,12 +28,12 @@ func ComputeContinued(D int64) Continued {
 	return append(con, con[1:n-1]...)
 }
 
-// FoldContinued computes numerator and denominator of a continued fraction
+// FoldContinued computes Numerator and Denominator of a continued fraction
 func FoldContinued(con Continued) (big.Int, big.Int) {
 	r := NewRational(0, 1)
 	for i := len(con) - 1; i >= 0; i-- {
 		r = r.AddInt(con[i])
 		r = r.Inverse()
 	}
-	return *r.denominator, *r.numerator
+	return *r.Denominator, *r.Numerator
 }

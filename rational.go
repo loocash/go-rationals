@@ -8,8 +8,8 @@ import (
 
 // T represents rational number
 type T struct {
-	numerator   *big.Int
-	denominator *big.Int
+	Numerator   *big.Int
+	Denominator *big.Int
 }
 
 // Simplify simplifies the number
@@ -21,24 +21,24 @@ func (n T) Simplify() T {
 	gcd = new(big.Int)
 	absNum = new(big.Int)
 	absDenom = new(big.Int)
-	absNum.Abs(n.numerator)
-	absDenom.Abs(n.denominator)
+	absNum.Abs(n.Numerator)
+	absDenom.Abs(n.Denominator)
 	if absNum.Cmp(big.NewInt(int64(0))) == 0 {
 		return n
 	}
 	gcd.GCD(nil, nil, absNum, absDenom)
-	num.Div(n.numerator, gcd)
-	denom.Div(n.denominator, gcd)
+	num.Div(n.Numerator, gcd)
+	denom.Div(n.Denominator, gcd)
 	return T{num, denom}
 }
 
 // NewRational creates brand new number
-func NewRational(numerator, denominator int64) T {
+func NewRational(Numerator, Denominator int64) T {
 	var num, denom *big.Int
 	num = new(big.Int)
 	denom = new(big.Int)
-	num.SetInt64(numerator)
-	denom.SetInt64(denominator)
+	num.SetInt64(Numerator)
+	denom.SetInt64(Denominator)
 	return T{num, denom}.Simplify()
 }
 
@@ -51,10 +51,10 @@ func (n T) Add(other T) T {
 	ad = new(big.Int)
 	bc = new(big.Int)
 
-	ad.Mul(n.numerator, other.denominator)
-	bc.Mul(n.denominator, other.numerator)
+	ad.Mul(n.Numerator, other.Denominator)
+	bc.Mul(n.Denominator, other.Numerator)
 	num.Add(ad, bc)
-	denom.Mul(n.denominator, other.denominator)
+	denom.Mul(n.Denominator, other.Denominator)
 
 	return T{num, denom}.Simplify()
 }
@@ -68,8 +68,8 @@ func (n T) AddInt(other int64) T {
 // Neg returns negative value of a number
 func (n T) Neg() T {
 	var neg *big.Int
-	neg.Neg(n.numerator)
-	return T{neg, n.denominator}.Simplify()
+	neg.Neg(n.Numerator)
+	return T{neg, n.Denominator}.Simplify()
 }
 
 // Subtract subtracts one number from another
@@ -81,15 +81,24 @@ func (n T) Subtract(other T) T {
 func (n T) Equals(other T) bool {
 	a := n.Simplify()
 	b := other.Simplify()
-	return a.numerator == b.numerator &&
-		a.denominator == b.denominator
+	return a.Numerator == b.Numerator &&
+		a.Denominator == b.Denominator
 }
 
 // Inverse inverses the number
 func (n T) Inverse() T {
-	return T{n.denominator, n.numerator}
+	return T{n.Denominator, n.Numerator}
+}
+
+// LessThan tests if n is less than other
+func (n T) LessThan(other T) bool {
+	mul1 := new(big.Int)
+	mul2 := new(big.Int)
+	mul1.Mul(n.Numerator, other.Denominator)
+	mul2.Mul(n.Denominator, other.Numerator)
+	return mul1.Cmp(mul2) < 0
 }
 
 func (n T) String() string {
-	return fmt.Sprintf("[%d/%d]", n.numerator, n.denominator)
+	return fmt.Sprintf("%d/%d", n.Numerator, n.Denominator)
 }

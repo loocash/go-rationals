@@ -1,5 +1,7 @@
 package rational
 
+import "testing"
+
 /*
 func TestAdd(t *testing.T) {
 	var tests = []struct {
@@ -99,6 +101,7 @@ func TestEquals(t *testing.T) {
 		}
 	}
 }
+*/
 
 func TestLessThan(t *testing.T) {
 	var tests = []struct {
@@ -106,9 +109,9 @@ func TestLessThan(t *testing.T) {
 		b T
 		c bool
 	}{
-		{T{5, 5}, T{1, 1}, false},
-		{T{12, 4}, T{3, 1}, false},
-		{T{83, 64}, T{83, 63}, true},
+		{NewRational(5, 5), NewRational(1, 1), false},
+		{NewRational(12, 4), NewRational(3, 1), false},
+		{NewRational(83, 64), NewRational(83, 63), true},
 	}
 
 	for _, test := range tests {
@@ -118,6 +121,7 @@ func TestLessThan(t *testing.T) {
 	}
 }
 
+/*
 func TestInverse(t *testing.T) {
 	var tests = []struct {
 		a T
